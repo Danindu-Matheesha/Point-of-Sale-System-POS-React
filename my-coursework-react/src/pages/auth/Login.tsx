@@ -26,7 +26,7 @@ function Login() {
         }
     }
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                     alt="Point of Sale System (POS)"
@@ -75,6 +75,13 @@ function Login() {
                         >
                             Login
                         </button>
+                    </div>
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-x-1 -top-50 -z-20 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+                        <div
+                            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+                        />
                     </div>
                 </form>
             </div>
