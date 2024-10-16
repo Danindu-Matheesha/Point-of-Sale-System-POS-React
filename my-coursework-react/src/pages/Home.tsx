@@ -4,7 +4,10 @@ function Home() {
     const { logout } = useAuth()
 
     const navigation = [
-        {name: "Category" , href: "/categories"}
+        {name: "Item", href: "/item"},
+        {name: "Category" , href: "/categories"},
+        {name: "Stock" , href: "/stock"},
+        {name: "Cart" , href: "/cart"}
     ]
 
     return (
