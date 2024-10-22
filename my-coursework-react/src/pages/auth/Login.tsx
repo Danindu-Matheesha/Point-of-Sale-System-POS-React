@@ -2,12 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
 function Login() {
     const { login } = useAuth();
     const navigate = useNavigate()
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
+    
     async function submit(event: any) {
         event.preventDefault();
         if (username === "" || password === "") {
@@ -25,6 +27,7 @@ function Login() {
             setError("There was an error logging in");
         }
     }
+    
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">

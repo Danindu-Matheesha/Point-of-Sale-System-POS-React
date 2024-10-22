@@ -10,6 +10,7 @@ import Stock from './pages/stock/Stock'
 import CreateStock from './pages/stock/CreateStock'
 import Cart from './pages/cart/Cart'
 import CreateCart from './pages/cart/CreateCart'
+import GetItem from './pages/Item/GetItem'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path="/categories" element={<ItemCategory />} />
             <Route path='/item' element={<Item />} />
+            <Route path='/item/getitems' element={<GetItem />} />
             <Route path='/stock' element={<Stock />} />
             <Route path='/stock/Create' element={<CreateStock />} />
             <Route path='/cart' element={<Cart />} />

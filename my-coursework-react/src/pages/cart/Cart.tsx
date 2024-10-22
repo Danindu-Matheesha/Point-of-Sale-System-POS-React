@@ -16,9 +16,9 @@ function Order() {
         }
     }
 
-    useEffect(function() {
+    useEffect(function () {
         loadCarts();
-    },[])
+    }, [])
 
 
     return (
@@ -38,14 +38,13 @@ function Order() {
             <div className="pt-4 pb-4"></div>
             <Link to="/cart/create" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 clear">Add Cart</Link>
             <div className="pt-4 pb-4"></div>
-            
-                <h1 className="text-1xl font-bold tracking-tight text-gray-600 broder underline underline-offset-1">Show All Cart</h1>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-                    
-                </div>
+
+            <h1 className="text-1xl font-bold tracking-tight text-gray-600 broder underline underline-offset-1">Show All Cart</h1>
+            <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
+
+            </div>
 
             <div className="pt-4 pb-4"></div>
-
             <table className="w-full border-separate border-spacing-0 border-none text-left">
                 <thead className="bg-blue-400">
                     <tr>
@@ -68,12 +67,12 @@ function Order() {
                 </tbody>
             </table>
             <div
-                    aria-hidden="true"
-                    className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-                    <div
-                        className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-                    />
-                </div>
+                aria-hidden="true"
+                className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+                <div
+                    className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+                />
+            </div>
         </div>
     )
 }

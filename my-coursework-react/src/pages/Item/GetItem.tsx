@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import ItemType from "../../types/ItemType";
 import axios from "axios";
 import ItemCategoryType from "../../types/ItemCategoryType";
 import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
 
 function Item() {
 
     const { isAuthenticated, jwtToken } = useAuth();
+
+    const [items, setItems] = useState<ItemType[]>([]);
 
     const [itemName, setItemName] = useState<string>("");
     const [price, setPrice] = useState<number>(0.0);
@@ -14,13 +16,17 @@ function Item() {
     const [quantity, setQuantity] = useState<number>(0.0);
     const [itemcategoryId, setItemCategoryId] = useState<number>();
 
-    const [error, setError] = useState<string>("");
     const [itemCategories, setItemCategories] = useState<ItemCategoryType[]>([]);
 
     const config = {
         headers: {
             Authorization: `Bearer ${jwtToken}`
         }
+    }
+
+    async function loadItems() {
+        const response = await axios.get("http://localhost:8081/items", config)
+        setItems(response.data);
     }
 
     async function loadItemCategories() {
@@ -31,6 +37,7 @@ function Item() {
     useEffect(function () {
 
         if (isAuthenticated) {
+            loadItems();
             loadItemCategories();
         }
     }, [isAuthenticated])
@@ -55,13 +62,17 @@ function Item() {
         setItemCategoryId(event.target.value);
     }
 
-    async function handleSubmit(event: any) {
+    const [itemEditing, setItemEditing] = useState<ItemType | null>(null);
 
-        event.preventDefault();
-        if (itemName === "" || price === 0 || description === "" || quantity === 0 || itemcategoryId === 0) {
-            setError("Insert Deta")
-        }
-
+    function editItem(item: ItemType) {
+        setItemEditing(item);
+        setItemName(item.name);
+        setPrice(item.price);
+        setDescription(item.description);
+        setQuantity(item.quantity);
+        setItemCategoryId(item.itemcategory?.id);
+    }
+    async function updateItem() {
         const data = {
             name: itemName,
             price: price,
@@ -69,41 +80,83 @@ function Item() {
             quantity: quantity,
             itemcategoryId: itemcategoryId
         }
-
         try {
-            await axios.post("http://localhost:8081/items", data);
+            await axios.put(`http://localhost:8081/items/${itemEditing?.id}`, data);
+            setItemEditing(null);
+            loadItems();
             setItemName("");
             setPrice(0);
             setDescription("");
             setQuantity(0);
             setItemCategoryId(0);
-            setError("Item Add")
-        } catch (error: any) {
+
+        } catch (error) {
             console.log(error);
-            setError("There was an error add item");
         }
     }
+
+    async function deleteItem(itemId: number) {
+        try {
+            await axios.delete(`http://localhost:8081/items/${itemId}`);
+            loadItems();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
         <div className="container mx-auto pt-5 pb-5">
             <div className="container mx-auto pt-5 pb-5 flex items-baseline justify-between border-b border-gray-400 pb-15 pt-24">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">Items</h1>
+                <h1 className="text-4xl font-bold tracking-tight text-gray-900">Show All Items</h1>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
                     <a
-                        href="/"
+                        href="/item"
                         className="text-sm font-semibold leading-6 text-gray-900"
                     > Back
                         <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
             </div>
-
             <div className="pt-4 pb-4"></div>
-            <Link to="/item/getitems" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 clear">Show All Items</Link>
-            <div className="pt-4 pb-4"></div>
+            <table className="w-full border-separate border-spacing-0 border-none text-left">
+                <thead className="bg-blue-400">
+                    <tr>
+                        <th className="w-[80px]">Item ID</th>
+                        <th className="w-[200px]">Item Name</th>
+                        <th className="w-[200px]">Item Price</th>
+                        <th className="w-[200px]">Item Description</th>
+                        <th className="w-[200px]">Item Quantity</th>
+                        <th className="w-[200px]">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {items.map(function (item) {
+                        return (
+                            <tr>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.price}</td>
+                                <td>{item.description}</td>
+                                <td>{item.quantity}</td>
 
-            <div className="pt-4 pb-4 "></div>
-            <div className="border border-slate-600 py-3 px-4 rounded-lg max-w-[350px] ">
+                                <td>
+                                    <div className="space-x-4">
+                                        <button onClick={() => editItem(item)} className="bg-blue-400 text-white px-2 py-1 rounded-lg hover:bg-blue-600 ">Edit</button>
+
+                                        <button onClick={() => deleteItem(item.id)} className="bg-red-500 text-black  rounded-lg px-2 py-1 hover:bg-red-500 space-x-4">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+
+            <div className="border border-slate-600 py-3 px-4 rounded-lg max-w-[350px]">
                 <form>
                     <div>
                         <label className="text-slate-600 font-sm block mb-2">Item Name</label>
@@ -137,8 +190,7 @@ function Item() {
                         </select>
                     </div>
 
-                    {error && <div className="text-sm text-red-500 text-center">{error}</div>}
-                    <button type="button" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 clear" onClick={handleSubmit}>Create Item</button>
+                    <button type="button" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 clear" onClick={updateItem}>Update Item</button>
 
                 </form>
             </div>
