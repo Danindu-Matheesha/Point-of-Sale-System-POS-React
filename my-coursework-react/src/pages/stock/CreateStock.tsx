@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ItemType from "../../types/ItemType";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 function CreateStock() {
 
@@ -59,15 +59,17 @@ function CreateStock() {
         <div>
             <div className="flex">
                 <div className="w-[400px] border-r border-slate-100 p-2">
-                    <span className="text-xl font-semibold text-slate-800 block h-[40px] p-2">Items</span>
+                <div className="container mx-auto pt-5 pb-5 flex items-baseline justify-between border-b border-gray-400 pb-15 pt-24">
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Items</h1>
+                    </div>
 
                     <div className="mt-5">
                         {items.map(function (item) {
                             return (
-                                <div onClick={() => addItemToStock(item)} className="border border-slate-200 rounded-lg p-2 mb-3">
+                                <div onClick={() => addItemToStock(item)} className="text-slate-600 border border-indigo-600 border-purple-300 rounded-full mb-3 p-3 shadow-lg">
                                     <div className="text-lg font-semibold text-slate-800">{item.name}</div>
                                     <div className="text-sm text-slate-400">{item.itemcategory?.name}</div>
-                                    <div className="text-sm text-green-600 text-right">Quantity = {item.quantity}</div>
+                                    <div className="text-sm text-blue-500 text-right">Quantity = {item.quantity}</div>
                                 </div>
                             )
                         })}
@@ -75,10 +77,21 @@ function CreateStock() {
                 </div>
 
                 <div className="p-2 w-full">
-                    <span className="text-xl font-semibold text-slate-800">New Stock</span>
+                <div className="container mx-auto pt-5 pb-5 flex items-baseline justify-between border-b border-gray-400 pb-15 pt-24">
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">New stock Add</h1>
+                        <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
+                            <a
+                                href="/stock"
+                                className="text-sm font-semibold leading-6 text-gray-900"
+                            > Back
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="pt-5 pb-5"></div>
 
                     <table className="w-full border-separate border-spacing-0 border-none text-left">
-                        <thead>
+                        <thead  className="bg-blue-400">
                             <tr>
                                 <th>ID</th>
                                 <th>Description</th>
@@ -95,6 +108,7 @@ function CreateStock() {
                                     </tr>
                                 )
                             })}
+                            <div className="pt-5 pb-5"></div>
                             <tr>
                                 <td colSpan={2}>
                                     <strong>Quantity</strong>
@@ -107,9 +121,16 @@ function CreateStock() {
                     </table>
 
                     <div className="mt-5">
-                        <button type="button" className="py-3 px-4 bg-slate-800 text-white rounded-lg hover:bg-slate-950 mb-2 text-sm" onClick={saveStock}>Save Stock</button>
+                        <button type="button" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 clear" onClick={saveStock}>Save Stock</button>
                     </div>
                 </div>
+            </div>
+            <div
+                aria-hidden="true"
+                className="absolute inset-x-1 -top-50 -z-20 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+                <div
+                    className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+                />
             </div>
         </div>
     )
