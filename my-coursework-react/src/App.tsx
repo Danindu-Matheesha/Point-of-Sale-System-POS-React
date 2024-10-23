@@ -11,6 +11,7 @@ import CreateStock from './pages/stock/CreateStock'
 import Cart from './pages/cart/Cart'
 import CreateCart from './pages/cart/CreateCart'
 import GetItem from './pages/Item/GetItem'
+import CreateUser from './pages/auth/CreateUser'
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path='/cart/Create' element={<CreateCart />} />
           </Route>
           <Route path='/auth/login' element={<Login />} />
+          <Route path='/auth/login/usercreate' element={<CreateUser />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const { login } = useAuth();
@@ -86,6 +86,7 @@ function Login() {
                             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                         />
                     </div>
+                    <Link to="/auth/login/usercreate" className="flex w-full justify-center  px-3 py-1.5 text-sm font-semibold leading-6 text-blue-600 clear">Create New User</Link>
                 </form>
             </div>
         </div>
